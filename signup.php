@@ -26,6 +26,7 @@
 		<input type="password" name="checkpassword"><br>
 		<input type="submit" name="submit" value="Register">
 	</form>
+	<a href="index.php">sign in</a>
 </body>
 </html>
 
@@ -55,6 +56,7 @@
 					catch(DependencyException $e) {
 						echo 'error';
 					}
+					header("Refresh: 3; URL=http://localhost:8000/index.php");
 				}
 			}
 		}
