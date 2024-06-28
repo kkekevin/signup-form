@@ -33,22 +33,18 @@
 		elseif (empty($password)) {
 			echo 'plese enter a password';			
 		} else {
-			$hash = password_hash($password, PASSWORD_DEFAULT);
-			$sql = "SELECT username, password FROM public.users WHERE username = '{$username}' AND password = '{$hash}'";
-					
-			try {
+			// select row of the user
+			$sql = "SELECT username, password FROM public.users WHERE username = '{$username}'";
 			$result = pg_query($conn, $sql);
-			}
-			catch(DependencyException $e) {
-				echo 'error';
-			}
 			if (pg_num_rows($result) == 0) {
-				echo "0 records";
+				echo "<br>username or password incorrect";
 		   	}
 			else {
-				echo 'hello';
+				$arrResult = pg_fetch_row($result);
+				// check password of the selected user
+				if (password_verify($password, $arrResult[1]))
+					header("Refresh: 3; URL=http://localhost:8000/homepage.html");
 			}
-			//if (!$result) header("Refresh: 3; URL=http://localhost:8000/homepage.html");
 		}
 	}
 
